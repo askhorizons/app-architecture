@@ -87,7 +87,7 @@ namespace API
                     Contact = new OpenApiContact
                     {
                         Name = "Salman Malik",
-                        Email = "salman@askhorizons.com"
+                        Email = "salman1277@gmail.com"
                     },
                     TermsOfService = new Uri("https://github.com/askhorizons")
                 });
@@ -131,7 +131,7 @@ namespace API
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Ask Horizons Solutions");
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "App Solutions");
                 options.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);
             });
 
