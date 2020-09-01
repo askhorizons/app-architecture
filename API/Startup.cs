@@ -1,4 +1,5 @@
 using System;
+using API.Extensions;
 using API.Utils;
 using AutoMapper;
 using AutoWrapper;
@@ -28,41 +29,16 @@ namespace API
             services.AddDbContext<AppDbContext>(x =>
                x.UseSqlServer(_Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<User, Role>()
-                .AddEntityFrameworkStores<AppDbContext>();
-
-            //IdentityBuilder builder = services.AddIdentityCore<User>(opt =>
-            //{
-            //    opt.Password.RequireDigit = false;
-            //    opt.Password.RequiredLength = 8;
-            //    opt.Password.RequireLowercase = false;
-            //    opt.Password.RequireUppercase = false;
-            //    opt.Password.RequireNonAlphanumeric = false;
-
-            //    opt.User.RequireUniqueEmail = true;
-            //});
-
-            //builder = new IdentityBuilder(builder.UserType, typeof(Role), builder.Services);
-            //builder.AddEntityFrameworkStores<AppDbContext>()
-            //       .AddDefaultTokenProviders();
-
-            //services.Configure<DataProtectionTokenProviderOptions>(opt =>
-            //{
-            //    opt.TokenLifespan = TimeSpan.FromHours(2);
-            //});
-
-            //builder.AddRoleValidator<RoleValidator<Role>>();
-            //builder.AddRoleManager<RoleManager<Role>>();
-            //builder.AddSignInManager<SignInManager<User>>();
-            //builder.AddUserManager<UserManager<User>>();
-            //builder.AddUserValidator<UserValidator<User>>();
+            //services.AddIdentity<User, Role>()
+            //    .AddEntityFrameworkStores<AppDbContext>();
 
             services.AddControllers();
+
             //Add Auto Mapper
             services.AddAutoMapper(typeof(AutoMapping));
 
             //Add Extension for dependency injections
-            //services.AddApplicationServices();
+            services.AddApplicationServices();
 
 
             //Add Cors
@@ -75,7 +51,7 @@ namespace API
             }));
 
             //Add Identity Services
-            //services.AddIdentityServices(_Configuration);
+            services.AddIdentityServices(_Configuration);
 
             services.AddSwaggerGen(c =>
             {

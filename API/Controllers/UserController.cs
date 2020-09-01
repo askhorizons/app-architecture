@@ -27,16 +27,16 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Get([FromQuery] GetUserParams params)
+        public async Task<ActionResult> Get([FromQuery] GetUserParams param)
         {
-            var temp = await _userRepository.Get(params);
+            var temp = await _userRepository.Get(param);
             return Ok(_mapper.Map<IEnumerable<UserDto>>(temp));
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(int id)
         {
-            var temp = await _userManager.Users.FirstOrDefaultAsync(p=>p.Id == id);
+            var temp = await _userRepository.GetById(id);
             return Ok(_mapper.Map<UserDto>(temp));
         }
     }
