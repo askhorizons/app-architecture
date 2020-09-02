@@ -32,6 +32,19 @@ namespace API.Extensions
                     };
                 });
 
+
+            services.Configure<IdentityOptions>(config =>
+            {
+                config.Password.RequireDigit = false;
+                config.Password.RequireLowercase = false;
+                config.Password.RequiredLength = 8;
+                config.Password.RequiredUniqueChars = 0;
+                config.Password.RequireUppercase = false;
+                config.Password.RequireNonAlphanumeric = false;
+
+                config.User.RequireUniqueEmail = true;
+            });
+
             return services;
         }
     }

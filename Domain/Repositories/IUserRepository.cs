@@ -1,9 +1,6 @@
-﻿using Domain.Entities;
-using Domain.Params;
-using Domain.Utils;
-using System;
+﻿using API.Domain.Filters;
+using Domain.Entities;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Domain.Repositories
@@ -11,6 +8,6 @@ namespace Domain.Repositories
     public interface IUserRepository
     {
         Task<User> GetById(int Id);
-        Task<PageList<User>> Get(GetUserParams p);
+        Task<List<User>> Get(PaginationFilter filter);
     }
 }

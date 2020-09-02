@@ -4,9 +4,12 @@ using API.Utils;
 using AutoMapper;
 using AutoWrapper;
 using Domain.Entities;
+using Domain.Services;
 using Infrastructure;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -29,8 +32,14 @@ namespace API
             services.AddDbContext<AppDbContext>(x =>
                x.UseSqlServer(_Configuration.GetConnectionString("DefaultConnection")));
 
-            //services.AddIdentity<User, Role>()
-            //    .AddEntityFrameworkStores<AppDbContext>();
+            services.AddHttpContextAccessor();
+            services.AddSingleton<IUriService>(o =>
+            {
+                var accessor = o.GetRequiredService<IHttpContextAccessor>();
+                var request = accessor.HttpContext.Request;
+                var uri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent());
+                return new UriService(uri);
+            });
 
             services.AddControllers();
 
@@ -113,15 +122,15 @@ namespace API
 
             // app.UseHttpsRedirection();
 
-            app.UseApiResponseAndExceptionWrapper(new AutoWrapperOptions
-            {
-                IgnoreNullValue = false,
-                ShowStatusCode = true,
-                UseCamelCaseNamingStrategy = true,
-                ApiVersion = "version 1.0",
-                ShowApiVersion = true,
-                UseCustomSchema = true
-            });
+            //app.UseApiResponseAndExceptionWrapper(new AutoWrapperOptions
+            //{
+            //    IgnoreNullValue = false,
+            //    ShowStatusCode = true,
+            //    UseCamelCaseNamingStrategy = true,
+            //    ApiVersion = "version 1.0",
+            //    ShowApiVersion = true,
+            //    UseCustomSchema = true
+            //});
 
             app.UseRouting();
             app.UseStaticFiles();
